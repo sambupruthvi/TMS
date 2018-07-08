@@ -1,0 +1,44 @@
+<!doctype html>
+{% extends 'supervisor/base.html' %}
+{% load staticfiles  %}
+
+
+<html lang="en">
+
+{% block content %}
+<style>
+th {
+    text-align: center;
+}
+</style>
+<body class="text-center">
+<div class="container">
+    <div class="jumbotron">
+      <fieldset class="fieldset" >
+            <legend>TimeSheet for Employees working on {{project_name}}</legend>
+      {% if emp_summaries %}
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Hours Worked</th>
+          </tr>
+        </thead>
+        {% for key,value in emp_summaries.items %}
+        <tr>
+          <td>{{key}}</td>
+          <td>{{value}}</td>
+        </tr>
+        {%endfor%}
+      </table>
+      {%else%}
+       <label style="color:red">There are not Timesheets available</label>
+      {%endif%}
+
+      </fieldset>
+    </div>
+</div>
+<a href="{% url 'supervisor:logout' %}" class="btn btn-danger">Logout</a>
+</body>
+{% endblock %}
+</html>

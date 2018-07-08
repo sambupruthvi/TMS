@@ -1,0 +1,75 @@
+{% extends 'supervisor/base.html' %}
+{% load staticfiles  %}
+
+
+<html lang="en">
+
+{% block content %}
+<style>
+td, th{
+  padding: 5px
+}
+</style>
+<body class="text-center">
+<div class="container">
+    <div class="jumbotron">
+      <fieldset class="fieldset" >
+            <legend>TimeSheet of Employees</legend>
+        <table>
+        <tbody>
+            <tr>
+                <td>From Date:</td>
+                <td><input class="form-control" name="min" id="min" type="date"></td>
+            </tr>
+            <tr>
+                <td>To Date:</td>
+                <td><input  class="form-control" name="max" id="max" type="date"></td>
+                <td><button onclick="filter_by_date()" type="button" name="button" class = "btn btn-success">Go</button></td>
+            </tr>
+            <tr>
+              <td>Search by name</td>
+              <td> <input class="form-control" type="text" name="" id="input_by_name" onkeyup="search_by_name()" value=""> </td>
+            </tr>
+        </tbody>
+      </table>
+        {% if timesheets %}
+          <table class="table table-hover" id = example>
+            <thead>
+              <tr>
+                <th scope="col">Timesheet #</th>
+                <th scope="col">Employee Name</th>
+                <th scope="col">Project</th>
+                <th scope="col">Date</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+              </tr>
+              {% for timesheet in timesheets %}
+              <form action="" method="get">
+                <tr>
+                  <td name="timesheet_id">{{timesheet.id}}</td>
+                  <td name="emp_name">{{timesheet.emp_name}}</td>
+                  <td name="project_name">{{ timesheet.project }}</td>
+                  <td name="date"> {{ timesheet.date|date:"Y-m-d" }}</td>
+                  <td name="from">{{timesheet.start_time|time:"h:i"}}</td>
+                  <td name="to">{{ timesheet.end_time|time:"h:i" }}</td>
+                  <input type="hidden" name="timesheet_id" value="{{timesheet.id}}">
+                </tr>
+              </form>
+              {%endfor%}
+            </thead>
+          </table>
+        {% else %}
+          <h2>You donot have any time sheets available to view</h2>
+        {% endif %}
+        {%if error%}
+          <h2>{{error}}</h2>
+        {%endif%}
+        </fieldset>
+    </div>
+</div>
+</body>
+
+        <br>
+        <a href="{% url 'accounts:logout' %}" class="btn btn-danger">Logout</a>
+{% endblock %}
+  </html>

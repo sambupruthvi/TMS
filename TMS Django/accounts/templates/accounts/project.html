@@ -1,0 +1,46 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+
+
+    <body class="text-center">
+
+
+      {% if projects %}
+          {% for project in projects %}
+             <form action="{% url 'accounts:addtimesheet' %}" method="get">
+               <div class="container">
+                  <div class="jumbotron">
+                      <div class="row">
+                        <div class="col-md-2">
+
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card w-75">
+                            <div class="card-body">
+                              <input type="hidden" name="project_id" value="{{ project.id }}">
+                              <h3 class="card-title">{{ project.project_name }}</h3>
+                              <label class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras accumsan ex quis enim luctus sodales.
+                                Interdum et malesuada fames ac ante ipsum primis in faucibus. </label>
+                              <input type="submit" class="btn btn-primary" value="Add Timesheet">
+                                <a href="{% url 'accounts:timesheet_view' %}" class="btn btn-primary">View Timesheets</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+
+                        </div>
+                    </div>
+                  </div>
+               </div>
+              </form>
+
+
+        </body>
+
+              <!-- <input type="radio" name = "project_id" value="{{ project.id }}">{{ project.project_name }}<br> -->
+          {%endfor%}
+              <!-- <input type="submit" value="Add Timesheet"> -->
+      {%else%}
+          <label style="color:red">You are not in any project currently</label>
+      {%endif%}
+{% endblock %}

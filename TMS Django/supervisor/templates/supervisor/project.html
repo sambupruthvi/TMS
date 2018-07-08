@@ -1,0 +1,45 @@
+{% extends 'supervisor/base.html' %}
+{% block content %}
+
+    <body class="text-center">
+      {% if projects %}
+          {% for project in projects %}
+      <div class="container">
+        <div class="jumbotron">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">{{ project.project_name }}</h3>
+                <label class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras accumsan ex quis enim luctus sodales.
+                  Interdum et malesuada fames ac ante ipsum primis in faucibus. </label>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <form action="{% url 'supervisor:manageproject' %}" method="get">
+                         <input type="hidden" name="project_id" value="{{ project.id }}">
+                         <input type="submit" class="btn btn-primary" name = "manage_project" value="Manage Project">
+                      </form>
+                    </div>
+                    <div class="col-sm-4">
+                      <form action="{% url 'supervisor:get_emp_summaries' %}" method="get">
+                         <input type="hidden" name="project_id" value="{{ project.id }}">
+                         <input type="submit" class="btn btn-primary" name="get_emp_summaries" value="Generate Summaries">
+                      </form>
+                    </div>
+                    <div class="col-sm-4">
+                      <form action="{% url 'supervisor:get_timesheets' %}" method="get">
+                         <input type="hidden" name="project_id" value="{{ project.id }}">
+                         <input type="submit" class="btn btn-primary" name="get_timesheets" value="Get Timesheets">
+                      </form>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%endfor%}
+
+      {%else%}
+        <label style="color:red">You are not in any project currently</label>
+      {%endif%}
+      <br>
+      <a href="{% url 'supervisor:logout' %}" class="btn btn-danger">Logout</a>
+{% endblock %}

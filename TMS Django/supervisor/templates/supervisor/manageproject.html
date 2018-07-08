@@ -1,0 +1,67 @@
+{% extends 'supervisor/base.html' %}
+{% block content %}
+<style>
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    vertical-align: bottom;
+}
+label.checkbox {
+    vertical-align: top;
+    line-height: 24px;
+    margin: 2px 0;
+    height: 24px;
+}
+</style>
+
+  <body>
+        <div class="container">
+        <div class="jumbotron">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">{{ project.project_name }}</h3>
+    <div class="container" >
+      <div class="row" >
+        <div class="col-xs-6" >
+          <form action="{% url 'supervisor:manageproject' %}" id="my_form1" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="project_id", value={{project.id}}>
+            <table class="table" id = "change_form1">
+              {% for employee in employees_could_add.all %}
+              <tr>
+                <td><label><input type="checkbox" name="employees_inproject" value="{{employee.id}}" style="align:left"> {{employee}}</label></td>
+              </tr>
+              {% endfor%}
+              <tr>
+                <td><button  class="btn btn-primary" name="Add_emp" value = "Add" type="submit">Add Employees</button></td>
+              </tr>
+            </table>
+          </form>
+        </div>
+        <div class="col-xs-6">
+          <form action="{% url 'supervisor:manageproject' %}" id="my_form2" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="project_id", value={{project.id}}>
+            <table class="table" id = "change_form2">
+            {% for employee in project.employees.all %}
+              <tr>
+                <td><input type="checkbox" name="employees" value="{{employee.id}}"> {{employee}}</td>
+              </tr>
+            {% endfor%}
+            <tr>
+              <td><button  class="btn btn-danger" name="Delete_emp" value="delete" type="submit">Delete</button></td>
+            </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+              </div>
+            </div>
+        </div>
+        </div>
+  </body>
+<div class="text-center"><a href="{% url 'accounts:logout' %}" class="btn btn-danger">Logout</a></div>
+
+
+{% endblock %}

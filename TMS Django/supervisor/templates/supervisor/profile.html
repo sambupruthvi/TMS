@@ -1,0 +1,23 @@
+{% extends "supervisor/base.html" %}
+{% block content %}
+{% csrf_token %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Employee Details</h5>
+              <ul>
+                  <li><strong>UserName:</strong> {{ profile.user }}</li>
+                  <li><strong>Employee:</strong> {{ profile.emp_name }}</li>
+                  <li><strong>Gender:</strong> {{ profile.gender }}</li>
+                  <li><strong>Salary:</strong> {{ profile.salary }}</li>
+              </ul>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="{% url 'accounts:logout' %}" class="btn btn-danger">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

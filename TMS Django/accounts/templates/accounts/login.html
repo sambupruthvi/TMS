@@ -1,0 +1,41 @@
+{% extends 'src.html' %}
+
+{% block javascript %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <fieldset class="fieldset" >
+            <legend>Login</legend>
+            <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+            <form action="{% url 'accounts:login' %}"  method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter UserName">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+                <button class="btn btn-lg btn-primary btn-block" id="check_login" type="submit">Log in</button>
+            </form>
+            {% if error %}
+                  <footer style="color:red">{{error}}</footer>
+                {% endif %}
+        </div>
+        <div class="col-md-4">
+
+        </div>
+
+
+        </fieldset>
+
+    </div>
+</div>
+{% endblock %}

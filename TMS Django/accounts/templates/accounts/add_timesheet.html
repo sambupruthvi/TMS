@@ -1,0 +1,56 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+  <body class="text-center">
+    <div class="container">
+    <div class="jumbotron">
+        <fieldset class="fieldset" >
+            <legend>Add Timesheet for {{project}}</legend>
+    <form action="{% url 'accounts:addtimesheet' %}" method="post"  >
+        {% csrf_token %}
+        {% if request.GET.next %}
+            <input type="hidden" name="next", value={{request.GET.next}}>
+        {% endif %}
+        <input type="hidden" name="project_id" value='{{project.id}}'>
+
+        <div class="form-group row">
+          <label for="" class="col-md-3 col-form-label">Date</label>
+          <div class="col-md-3">
+            <input type="date" class="form-control" name="date" id="inputEmail3" placeholder="Date">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="" class="col-md-3 col-form-label">From</label>
+          <div class="col-md-3">
+            <input type="time" step="900" class="form-control" name="from" id="inputEmail3" placeholder="From">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="" class="col-md-3 col-form-label">To</label>
+          <div class="col-md-3">
+            <input type="time" step="900" class="form-control" name="to" id="inputEmail3" placeholder="To">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-8">
+              {% if error %}
+                <footer>{{error}}</footer>
+              {% endif %}
+              <br>
+            <button type="submit" class="btn btn-primary">Add Timesheet</button>
+              <a href="{% url 'accounts:timesheet_view' %}" class="btn btn-primary">View Timesheets</a>
+          </div>
+        </div>
+    </form>
+        </fieldset></div></div></body>
+    <br>
+    <a href="{% url 'accounts:logout' %}" class="btn btn-danger">Logout</a>
+{% endblock %}

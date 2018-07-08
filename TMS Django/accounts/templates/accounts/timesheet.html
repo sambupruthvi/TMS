@@ -1,0 +1,51 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+<style>
+th {
+    text-align: center;
+}
+</style>
+<body class="text-center">
+<div class="container">
+    <div class="jumbotron">
+      <fieldset class="fieldset" >
+            <legend>TimeSheets</legend>
+        {% if timesheets %}
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Timesheet #</th>
+                <th scope="col">project</th>
+                <th scope="col">Date</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th></th>
+              </tr>
+              {% for timesheet in timesheets %}
+              <form action="{% url 'accounts:edittimesheet' %}" method="get">
+                <tr>
+                  <td>{{timesheet.id}}</td>
+                  <td name="project_name">{{ timesheet.project }}</td>
+                  <td name="date"> {{ timesheet.date|date:"Y-m-d" }}</td>
+                  <td name="from">{{timesheet.start_time|time:"h:i"}}</td>
+                  <td name="to">{{ timesheet.end_time|time:"h:i" }}</td>
+                  <input type="hidden" name="timesheet_id" value="{{timesheet.id}}">
+                  <td><input type="submit" class="btn btn-primary" value="Edit Timesheet"></td>
+                </tr>
+              </form>
+              {%endfor%}
+            </thead>
+          </table>
+        {% else %}
+          <label style="color:red">You donot have any time sheets available to view</label>
+        {% endif %}
+        {%if error%}
+          <footer style="color:red">{{error}}</footer>
+        {%endif%}
+        <br>
+        <a href="{% url 'accounts:logout' %}" class = "btn btn-danger" >Logout</a>
+      </fieldset>
+    </div>
+</div>
+    </body>
+{% endblock %}
